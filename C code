@@ -1,0 +1,36 @@
+#include "stm32f10x.h"                  // Device header
+
+void gpioConfig(){
+
+	GPIO_InitTypeDef GPIOInitSTructure;
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+	
+	GPIOInitSTructure.GPIO_Mode = GPIO_Mode_Out_PP; // led output
+	GPIOInitSTructure.GPIO_Pin = GPIO_Pin_13; // led 13 pin
+	GPIOInitSTructure.GPIO_Speed = GPIO_Speed_50MHz;
+	
+	GPIO_Init(GPIOC, &GPIOInitSTructure);
+
+}
+
+// delay func
+void delay(uint32_t time){
+
+	while(time--);
+}
+
+int main(){
+	
+	gpioConfig();
+	
+	while(1){
+		
+		GPIO_SetBits(GPIOC, GPIO_Pin_13); // set led 13
+		delay(3600000);
+		GPIO_ResetBits(GPIOC, GPIO_Pin_13); // reset led 13
+		delay(3600000);
+		
+	}
+
+
+}
